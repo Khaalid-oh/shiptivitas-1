@@ -3,7 +3,6 @@ import Dragula from 'dragula';
 import 'dragula/dist/dragula.css';
 import Swimlane from './Swimlane';
 import './Board.css';
-import Card from './Card';
 
 export default class Board extends React.Component {
   constructor(props) {
@@ -68,7 +67,7 @@ export default class Board extends React.Component {
     this.drake = Dragula(containers);
 
     this.drake.on("drop", (el, target, source, sibling) => {
-      console.log("Element dropped in swimlane!");
+        console.log("Element dropped in swimlane!");
     });
   }
   componentWillUnmount() {
