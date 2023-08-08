@@ -3,6 +3,7 @@ import Dragula from 'dragula';
 import 'dragula/dist/dragula.css';
 import Swimlane from './Swimlane';
 import './Board.css';
+import Card from './Card';
 
 export default class Board extends React.Component {
   constructor(props) {
@@ -11,9 +12,9 @@ export default class Board extends React.Component {
     const clients = this.getClients();
     this.state = {
       clients: {
-        backlog: clients.filter(client => !client.status || client.status === 'backlog'),
-        inProgress: clients.filter(client => client.status && client.status === 'in-progress'),
-        complete: clients.filter(client => client.status && client.status === 'complete'),
+      backlog: clients,
+      inProgress: [],
+      complete: [],
       }
     }
     this.swimlanes = {
@@ -81,21 +82,30 @@ export default class Board extends React.Component {
       <div className="Board">
         <div className="container-fluid">
           <div className="row">
-            <div className="col-md-4" ref={this.containerRef}>
+            <div
+              className="Swimlane-column col-md-4"
+              ref={this.containerRef}
+            >
               {this.renderSwimlane(
                 "Backlog",
                 this.state.clients.backlog,
                 this.swimlanes.backlog
               )}
             </div>
-            <div className="col-md-4" ref={this.containerRef}>
+            <div
+              className="Swimlane-column col-md-4"
+              ref={this.containerRef}
+            >
               {this.renderSwimlane(
                 "In Progress",
                 this.state.clients.inProgress,
                 this.swimlanes.inProgress
               )}
             </div>
-            <div className="col-md-4" ref={this.containerRef}>
+            <div
+              className="Swimlane-column col-md-4"
+              ref={this.containerRef}
+            >
               {this.renderSwimlane(
                 "Complete",
                 this.state.clients.complete,
