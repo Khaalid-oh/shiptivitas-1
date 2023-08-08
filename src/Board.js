@@ -7,6 +7,7 @@ import './Board.css';
 export default class Board extends React.Component {
   constructor(props) {
     super(props);
+    this.containerRef = React.createRef();
     const clients = this.getClients();
     this.state = {
       clients: {
@@ -55,20 +56,51 @@ export default class Board extends React.Component {
       <Swimlane name={name} clients={clients} dragulaRef={ref}/>
     );
   }
+    componentDidMount() {
+
+    const containers = [
+      this.swimlanes.backlog.current,
+      this.swimlanes.inProgress.current,
+      this.swimlanes.complete.current,
+    ];
+
+    this.drake = Dragula(containers);
+
+    this.drake.on("drop", (el, target, source, sibling) => {
+      console.log("Element dropped in swimlane!");
+    });
+  }
+  componentWillUnmount() {
+     if (this.drake) {
+        this.drake.destroy();
+      }
+  }
 
   render() {
     return (
       <div className="Board">
         <div className="container-fluid">
           <div className="row">
-            <div className="col-md-4">
-              {this.renderSwimlane('Backlog', this.state.clients.backlog, this.swimlanes.backlog)}
+            <div className="col-md-4" ref={this.containerRef}>
+              {this.renderSwimlane(
+                "Backlog",
+                this.state.clients.backlog,
+                this.swimlanes.backlog
+              )}
             </div>
-            <div className="col-md-4">
-              {this.renderSwimlane('In Progress', this.state.clients.inProgress, this.swimlanes.inProgress)}
+            <div className="col-md-4" ref={this.containerRef}>
+              {this.renderSwimlane(
+                "In Progress",
+                this.state.clients.inProgress,
+                this.swimlanes.inProgress
+              )}
             </div>
-            <div className="col-md-4">
-              {this.renderSwimlane('Complete', this.state.clients.complete, this.swimlanes.complete)}
+            <div className="col-md-4" ref={this.containerRef}>
+              {this.renderSwimlane(
+                "Complete",
+                this.state.clients.complete,
+                this.swimlanes.complete
+              )}
             </div>
           </div>
         </div>
