@@ -33,13 +33,13 @@ export default class Board extends React.Component {
         "1",
         "Stark, White and Abbott",
         "Cloned Optimal Architecture",
-        "in-progress",
+        "backlog",
       ],
       [
         "2",
         "Wiza LLC",
         "Exclusive Bandwidth-Monitored Implementation",
-        "complete",
+        "backlog",
       ],
       [
         "3",
@@ -47,17 +47,12 @@ export default class Board extends React.Component {
         "Vision-Oriented 4Thgeneration Graphicaluserinterface",
         "backlog",
       ],
-      [
-        "4",
-        "Thompson PLC",
-        "Streamlined Regional Knowledgeuser",
-        "in-progress",
-      ],
+      ["4", "Thompson PLC", "Streamlined Regional Knowledgeuser", "backlog"],
       [
         "5",
         "Walker-Williamson",
         "Team-Oriented 6Thgeneration Matrix",
-        "in-progress",
+        "backlog",
       ],
       ["6", "Boehm and Sons", "Automated Systematic Paradigm", "backlog"],
       [
@@ -74,7 +69,7 @@ export default class Board extends React.Component {
         "backlog",
       ],
       ["10", "Romaguera Inc", "Managed Foreground Toolset", "backlog"],
-      ["11", "Reilly-King", "Future-Proofed Interactive Toolset", "complete"],
+      ["11", "Reilly-King", "Future-Proofed Interactive Toolset", "backlog"],
       [
         "12",
         "Emard, Champlin and Runolfsdottir",
@@ -85,7 +80,7 @@ export default class Board extends React.Component {
         "13",
         "Fritsch, Cronin and Wolff",
         "Open-Source 3Rdgeneration Website",
-        "complete",
+        "backlog",
       ],
       [
         "14",
@@ -93,19 +88,14 @@ export default class Board extends React.Component {
         "Profit-Focused Incremental Orchestration",
         "backlog",
       ],
-      [
-        "15",
-        "Emmerich-Ankunding",
-        "User-Centric Stable Extranet",
-        "in-progress",
-      ],
+      ["15", "Emmerich-Ankunding", "User-Centric Stable Extranet", "backlog"],
       [
         "16",
         "Willms-Abbott",
         "Progressive Bandwidth-Monitored Access",
-        "in-progress",
+        "backlog",
       ],
-      ["17", "Brekke PLC", "Intuitive User-Facing Customerloyalty", "complete"],
+      ["17", "Brekke PLC", "Intuitive User-Facing Customerloyalty", "backlog"],
       [
         "18",
         "Bins, Toy and Klocko",
@@ -168,7 +158,9 @@ export default class Board extends React.Component {
       this.swimlanes.inProgress.current,
       this.swimlanes.complete.current,
     ]);
-    this.drake.on('drop', (el, target, source, sibling) => this.updateClient(el, target, source, sibling));
+    this.drake.on("drop", (el, target, source, sibling) =>
+      this.updateClient(el, target, source, sibling)
+    );
   }
 
   componentWillUnmount() {
@@ -183,11 +175,11 @@ export default class Board extends React.Component {
     this.drake.cancel(true);
 
     // Find out which swimlane the Card was moved to
-    let targetSwimlane = 'backlog';
+    let targetSwimlane = "backlog";
     if (target === this.swimlanes.inProgress.current) {
-      targetSwimlane = 'in-progress';
+      targetSwimlane = "in-progress";
     } else if (target === this.swimlanes.complete.current) {
-      targetSwimlane = 'complete';
+      targetSwimlane = "complete";
     }
 
     // Create a new clients array
@@ -196,26 +188,42 @@ export default class Board extends React.Component {
       ...this.state.clients.inProgress,
       ...this.state.clients.complete,
     ];
-    const clientThatMoved = clientsList.find(client => client.id === el.dataset.id);
+    const clientThatMoved = clientsList.find(
+      (client) => client.id === el.dataset.id
+    );
     const clientThatMovedClone = {
       ...clientThatMoved,
       status: targetSwimlane,
     };
 
     // Remove ClientThatMoved from the clientsList
-    const updatedClients = clientsList.filter(client => client.id !== clientThatMovedClone.id);
+    const updatedClients = clientsList.filter(
+      (client) => client.id !== clientThatMovedClone.id
+    );
 
     // Place ClientThatMoved just before the sibling client, keeping the order
-    const index = updatedClients.findIndex(client => sibling && client.id === sibling.dataset.id);
-    updatedClients.splice(index === -1 ? updatedClients.length : index , 0, clientThatMovedClone);
+    const index = updatedClients.findIndex(
+      (client) => sibling && client.id === sibling.dataset.id
+    );
+    updatedClients.splice(
+      index === -1 ? updatedClients.length : index,
+      0,
+      clientThatMovedClone
+    );
 
     // Update React state to reflect changes
     this.setState({
       clients: {
-        backlog: updatedClients.filter(client => !client.status || client.status === 'backlog'),
-        inProgress: updatedClients.filter(client => client.status && client.status === 'in-progress'),
-        complete: updatedClients.filter(client => client.status && client.status === 'complete'),
-      }
+        backlog: updatedClients.filter(
+          (client) => !client.status || client.status === "backlog"
+        ),
+        inProgress: updatedClients.filter(
+          (client) => client.status && client.status === "in-progress"
+        ),
+        complete: updatedClients.filter(
+          (client) => client.status && client.status === "complete"
+        ),
+      },
     });
   }
 }
