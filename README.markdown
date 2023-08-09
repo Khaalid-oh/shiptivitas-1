@@ -78,3 +78,37 @@ then use it by calling `Dragula` directly.
 
 Visit Dragula repository on github for more information
 [https://github.com/bevacqua/dragula](https://github.com/bevacqua/dragula)
+
+
+# How I achieved my goal:
+
+1. **Start the Project:**
+
+   - Install the required npm packages for the project.
+   - Use the command `npm start` to start the project. It should open in your web browser.
+
+2. **Troubleshoot npm Start:**
+
+   - If `npm start` doesn't work, troubleshoot by:
+     - Opening the `package.json` file in your project folder.
+     - Look for `"start": "react-scripts start",`.
+     - Update it to `"start": "react-scripts --openssl-legacy-provider start",`.
+
+3. **Install dragula Package:**
+
+   - Use the command `npm install dragula` to install the dragula package.
+
+4. **Fix Drag and Drop:**
+
+   - After installing dragula, implement it in your project following the documentation.
+
+5. **Move Tasks to Backlog:**
+
+   - Set tasks to automatically move to the backlog:
+     - Find the relevant code section and modify it.
+
+6. **Attempt Color Change on Drop:**
+   - Try fixing the color change when tasks are dropped:
+     - Locate the code section responsible and follow debugging steps if needed.
+
+Remember, if you encounter any difficulties during these steps, don't hesitate to refer to documentation or ask for help in online forums. Learning and improving comes with practice, so keep exploring and experimenting.
